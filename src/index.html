@@ -10,6 +10,33 @@
 
 <body>
   <h1>PWA Test</h1>
+  <button id="download">Download</button>
+
+  <script>
+    function load() {
+      const btnDownload = document.getElementById('download');
+
+      const download = () => {
+        const options = {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIs...',
+          }
+        };
+
+        fetch('https://proxier.now.sh/https://m-api.tjmt.jus.br/holerites/54010/folha', options).then(
+          response => response.blob()
+        ).then(
+          blob => console.log(blob)
+        ).catch(err => console.log(err));
+      }
+
+      btnDownload.addEventListener('click', download, false);
+    }
+
+    document.addEventListener('DOMContentLoaded', load);
+  </script>
+
 </body>
 
 </html>
