@@ -37,6 +37,16 @@
     document.addEventListener('DOMContentLoaded', load);
   </script>
 
+  <script>
+    window.addEventListener('load', () => {
+      // Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+          .then((reg) => console.log('Service Worker Registered', reg));
+      }
+    });
+  </script>
+
 </body>
 
 </html>
