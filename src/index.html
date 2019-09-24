@@ -16,6 +16,14 @@
   <h1>PWA Test</h1>
   <button id="download">Download</button>
 
+  <object id="contentarea" data="http://www.orimi.com/pdf-test.pdf" type="application/pdf" width="100%" height="100%">
+    <iframe src="https://example.com/test.pdf#page=2" width="100%" height="100%" style="border: none;">
+      <p>Your browser does not support PDFs.
+        <a href="https://example.com/test.pdf">Download the PDF</a>.
+      </p>
+    </iframe>
+  </object>
+
   <script>
     function load() {
       const btnDownload = document.getElementById('download');
@@ -31,7 +39,10 @@
         fetch('https://proxier.now.sh/https://m-api.tjmt.jus.br/holerites/54010/folha', options).then(
           response => response.blob()
         ).then(
-          blob => console.log(blob)
+          blob => {
+            const objectURL = URL.createObjectURL(blob);
+            document.getElementById("contentarea").setAttribute('data', objectURL);
+          }
         ).catch(err => console.log(err));
       }
 
