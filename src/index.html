@@ -16,8 +16,9 @@
   <h1>PWA Test</h1>
   <button id="download">Download</button>
 
+  <!-- src="https://example.com/test.pdf#page=2" -->
   <object id="contentarea" data="http://www.orimi.com/pdf-test.pdf" type="application/pdf" width="100%" height="100%">
-    <iframe src="https://example.com/test.pdf#page=2" width="100%" height="100%" style="border: none;">
+    <iframe id="iframe-test" src="about:blank" width="100%" height="100%" style="border: none;">
       <p>Your browser does not support PDFs.
         <a href="https://example.com/test.pdf">Download the PDF</a>.
       </p>
@@ -28,20 +29,31 @@
     function load() {
       const btnDownload = document.getElementById('download');
 
+      const url = "https://example.com/test.pdf#page=2"
+
+      document.querySelector("iframe").setAttribute('src', url);
+
       const download = () => {
         const options = {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIs...',
+            'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjlGRUIyNDZGNzQyMTRCNEZGQjhFNTRBREI4MEIxRTQwM0U2RTM3MTQiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJuLXNrYjNRaFMwXzdqbFN0dUFzZVFENXVOeFEifQ.eyJuYmYiOjE1Njk3ODIxMTEsImV4cCI6MTU2OTg2ODUxMSwiaXNzIjoiaHR0cHM6Ly9pZHAtaG9tLnRqbXQuanVzLmJyIiwiYXVkIjpbImh0dHBzOi8vaWRwLWhvbS50am10Lmp1cy5ici9yZXNvdXJjZXMiLCJjb25zdWx0YXByb2Nlc3N1YWxfYXBpIiwicGptdF9wcm9maWxlX2FwaSIsIjI0MTciXSwiY2xpZW50X2lkIjoiMjQxNyIsInN1YiI6IjE2OTE4IiwiYXV0aF90aW1lIjoxNTY5NzgyMTEwLCJpZHAiOiJsb2NhbCIsImlkX2xvdGFjYW8iOiI2MDE5IiwibWF0cmljdWxhIjoiNjgiLCJsb2dpbiI6IjI2MDMxIiwiY3BmIjoiMDIzMTA4NzQxMTYiLCJjcGZfY29uZmlhdmVsIjoidHJ1ZSIsImNlcmJlcnVzX2F1dGhfaWQiOiIxMDg0NjEyNCIsIm1vZG9BdXRlbnRpY2FjYW8iOiJhdXRlbnRpY2FjYW8tbG9naW4tc2VuaGEiLCJjb2RpZ29fZGlzcG9zaXRpdm8iOiJabVJsWm1KaFptUTFNakZqWXpjeU9EZ3paVGN4T1RnMk5EQmpZelZqTUdZdFdVNXllR0p0TFhGMyIsInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJwam10X3Byb2ZpbGUiLCJlbWFpbCIsInJvbGVzIiwiY29uc3VsdGFwcm9jZXNzdWFsX2FwaSIsInBqbXRfcHJvZmlsZV9hcGkiLCJwZXJtaXNzYW9fMjQxNyIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.SLux4QYMXyDPw3lGeOk4xCOtxRdvBiPH3BZozRAOt8C2xs0GHpM56NZyuBV4BG4z8d-zg-ULOxuNm8rfi97TmvmmtTLBtGxU9qmL5N-icLqB7aUy_L8tErWp_w5Z_4hNVD4eSFAsbdZev9f3nH2P22kH8zMXyJRDyNb7Fm9UNDQ81H_-5H3IfgJ7z2mYG91Cx4MMPYIMMBb7TgCTRMGEQGkQg3oEDihf56-KaTcEhD_vtKPMYAqPOlQQt2l7zVq8w5KYMq056ZwCfkTMIBSGzc0PZ-2Vr6lKdesKnJmXFCO0Rl4_gXYoief7EF2SEWRLqMKZwPNN7-ZNc7gV9SW8Xg',
           }
         };
 
-        fetch('https://proxier.now.sh/https://m-api.tjmt.jus.br/holerites/54010/folha', options).then(
+        fetch('https://proxier.now.sh/https://m-api-rc.tjmt.jus.br/holerites/54010/folha', options).then(
           response => response.blob()
         ).then(
           blob => {
             const objectURL = URL.createObjectURL(blob);
+            debugger
+            document.querySelector("iframe").setAttribute('src', objectURL);
+
             document.getElementById("contentarea").setAttribute('data', objectURL);
+
+            // document.querySelector('iframe').src = url;
+            // document.querySelector("iframe").setAttribute('src', url);
+            // src=
           }
         ).catch(err => console.log(err));
       }
