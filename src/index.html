@@ -27,7 +27,6 @@
 </head>
 
 <body>
-  <h1>UnFire</h1>
 
   <div id="map"></div>
 
@@ -55,9 +54,13 @@
 
       setCurrentPosition();
 
-      addMarkers();
+      setTimeout(() => {
+        addDeforestation();
+      }, 10000);
 
-      addDeforestation();
+      setTimeout(() => {
+        addMarkers();
+      }, 1500);
 
       const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
         infoWindow.setPosition(pos);
@@ -101,24 +104,37 @@
         new google.maps.LatLng(-15.568642, -56.046343)
       ];
 
+      let deferes = [
+        new google.maps.LatLng(-15.568601, -56.094145),
+        new google.maps.LatLng(-15.568411, -56.094155),
+        new google.maps.LatLng(-15.565621, -56.064165),
+        new google.maps.LatLng(-15.565621, -56.064165),
+        new google.maps.LatLng(-15.586621, -56.064165),
+        new google.maps.LatLng(-15.578631, -56.084175)
+      ];
+
       position = new google.maps.LatLng(-15.568601, -56.094145);
+
+      let markers = [];
 
       var image =
         'https://firebasestorage.googleapis.com/v0/b/pwa-tjmt-test.appspot.com/o/mark.png?alt=media&token=d3c6275b-7ce4-4e17-a021-5afd2bb8cb7c';
 
       window.setInterval(() => {
 
-        if (positions.length === 4) {
+        if (positions.length > 0) {
+          markers.push(positions[0]);
           positions.splice(0, 1);
         } else {
-          positions = [position, ...positions];
+          markers = [...markers, ...deferes];
         }
 
-        const markers = positions.map((position, i) => {
+        // const markers = 
+        markers.map((position, i) => {
           return new google.maps.Marker({
             position,
             map,
-            label: `${i}`,
+            // label: `${i}`,
             icon: image
           });
         });
