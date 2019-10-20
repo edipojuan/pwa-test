@@ -6,62 +6,157 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#008000" />
-  <meta name="Description" content="Author: Édipo Juan, Category: PWA Test, Length: 1 page">
-  <title>PWA Test</title>
+  <meta name="Description" content="Author: Édipo Juan, Category: UnFire, Length: 1 page">
+  <title>UnFire</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-512x512.png">
+
+  <style>
+    #map {
+      height: 100%;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+
 </head>
 
 <body>
-  <h1>PWA Test</h1>
-  <button id="download">Download</button>
+  <h1>UnFire</h1>
 
-  <!-- src="https://example.com/test.pdf#page=2" -->
-  <object id="contentarea" data="http://www.orimi.com/pdf-test.pdf" type="application/pdf" width="100%" height="100%">
-    <iframe id="iframe-test" src="about:blank" width="100%" height="100%" style="border: none;">
-      <p>Your browser does not support PDFs.
-        <a href="https://example.com/test.pdf">Download the PDF</a>.
-      </p>
-    </iframe>
-  </object>
+  <div id="map"></div>
 
   <script>
-    function load() {
-      const btnDownload = document.getElementById('download');
+    let map;
 
-      const url = "https://example.com/test.pdf#page=2"
-
-      document.querySelector("iframe").setAttribute('src', url);
-
-      const download = () => {
-        const options = {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjlGRUIyNDZGNzQyMTRCNEZGQjhFNTRBREI4MEIxRTQwM0U2RTM3MTQiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJuLXNrYjNRaFMwXzdqbFN0dUFzZVFENXVOeFEifQ.eyJuYmYiOjE1Njk3ODIxMTEsImV4cCI6MTU2OTg2ODUxMSwiaXNzIjoiaHR0cHM6Ly9pZHAtaG9tLnRqbXQuanVzLmJyIiwiYXVkIjpbImh0dHBzOi8vaWRwLWhvbS50am10Lmp1cy5ici9yZXNvdXJjZXMiLCJjb25zdWx0YXByb2Nlc3N1YWxfYXBpIiwicGptdF9wcm9maWxlX2FwaSIsIjI0MTciXSwiY2xpZW50X2lkIjoiMjQxNyIsInN1YiI6IjE2OTE4IiwiYXV0aF90aW1lIjoxNTY5NzgyMTEwLCJpZHAiOiJsb2NhbCIsImlkX2xvdGFjYW8iOiI2MDE5IiwibWF0cmljdWxhIjoiNjgiLCJsb2dpbiI6IjI2MDMxIiwiY3BmIjoiMDIzMTA4NzQxMTYiLCJjcGZfY29uZmlhdmVsIjoidHJ1ZSIsImNlcmJlcnVzX2F1dGhfaWQiOiIxMDg0NjEyNCIsIm1vZG9BdXRlbnRpY2FjYW8iOiJhdXRlbnRpY2FjYW8tbG9naW4tc2VuaGEiLCJjb2RpZ29fZGlzcG9zaXRpdm8iOiJabVJsWm1KaFptUTFNakZqWXpjeU9EZ3paVGN4T1RnMk5EQmpZelZqTUdZdFdVNXllR0p0TFhGMyIsInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJwam10X3Byb2ZpbGUiLCJlbWFpbCIsInJvbGVzIiwiY29uc3VsdGFwcm9jZXNzdWFsX2FwaSIsInBqbXRfcHJvZmlsZV9hcGkiLCJwZXJtaXNzYW9fMjQxNyIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.SLux4QYMXyDPw3lGeOk4xCOtxRdvBiPH3BZozRAOt8C2xs0GHpM56NZyuBV4BG4z8d-zg-ULOxuNm8rfi97TmvmmtTLBtGxU9qmL5N-icLqB7aUy_L8tErWp_w5Z_4hNVD4eSFAsbdZev9f3nH2P22kH8zMXyJRDyNb7Fm9UNDQ81H_-5H3IfgJ7z2mYG91Cx4MMPYIMMBb7TgCTRMGEQGkQg3oEDihf56-KaTcEhD_vtKPMYAqPOlQQt2l7zVq8w5KYMq056ZwCfkTMIBSGzc0PZ-2Vr6lKdesKnJmXFCO0Rl4_gXYoief7EF2SEWRLqMKZwPNN7-ZNc7gV9SW8Xg',
-          }
-        };
-
-        fetch('https://proxier.now.sh/https://m-api-rc.tjmt.jus.br/holerites/54010/folha', options).then(
-          response => response.blob()
-        ).then(
-          blob => {
-            const objectURL = URL.createObjectURL(blob);
-            debugger
-            document.querySelector("iframe").setAttribute('src', objectURL);
-
-            document.getElementById("contentarea").setAttribute('data', objectURL);
-
-            // document.querySelector('iframe').src = url;
-            // document.querySelector("iframe").setAttribute('src', url);
-            // src=
-          }
-        ).catch(err => console.log(err));
-      }
-
-      btnDownload.addEventListener('click', download, false);
+    function initMap() {
+      load();
     }
 
-    document.addEventListener('DOMContentLoaded', load);
+    function load() {
+      console.log(`Google Maps API version: ${google.maps.version}`);
+
+      const latLng = new google.maps.LatLng(-15.553609, -56.096618);
+
+      const mapOptions = {
+        center: latLng,
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        heading: 90,
+        tilt: 45
+      };
+
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+      setCurrentPosition();
+
+      addMarkers();
+
+      addDeforestation();
+
+      const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+          browserHasGeolocation ?
+          'Error: The Geolocation service failed.' :
+          'Error: Your browser doesn\'t support geolocation.'
+        );
+        infoWindow.open(map);
+      }
+    }
+
+    function setCurrentPosition() {
+      const infoWindow = new google.maps.InfoWindow();
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Você está a 7km de um incêndio grau 7');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          },
+          () => this.handleLocationError(true, infoWindow, map.getCenter())
+        );
+      } else {
+        this.handleLocationError(false, infoWindow, map.getCenter());
+      }
+    }
+
+    function addMarkers() {
+      let positions = [
+        new google.maps.LatLng(-15.568601, -56.094145) /* despraiado */ ,
+        new google.maps.LatLng(-15.568642, -56.057323) /* moradaDoOuro */ ,
+        new google.maps.LatLng(-15.568642, -56.052343),
+        new google.maps.LatLng(-15.568642, -56.046343)
+      ];
+
+      position = new google.maps.LatLng(-15.568601, -56.094145);
+
+      var image = './../icons/fire.jpeg';
+
+      window.setInterval(() => {
+
+        if (positions.length === 4) {
+          positions.splice(0, 1);
+        } else {
+          positions = [position, ...positions];
+        }
+
+        const markers = positions.map((position, i) => {
+          return new google.maps.Marker({
+            position,
+            map,
+            label: `${i}`,
+            icon: image
+          });
+        });
+
+      }, 2000);
+    }
+
+    function addDeforestation() {
+
+      var triangleCoords = [{
+          lat: -15.568601,
+          lng: -56.094145
+        },
+        {
+          lat: -15.568411,
+          lng: -56.094155
+        },
+        {
+          lat: -15.565621,
+          lng: -56.064165
+        },
+        {
+          lat: -15.578631,
+          lng: -56.084175
+        }
+      ];
+
+      var bermudaTriangle = new google.maps.Polygon({
+        paths: triangleCoords,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35
+      });
+      bermudaTriangle.setMap(map);
+    }
+
+    // document.addEventListener('DOMContentLoaded', load);
   </script>
 
   <script>
@@ -73,6 +168,9 @@
       }
     });
   </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzk3byO8JebOVtER7DyBQyhKemOmxWPMo&callback=initMap"
+    async defer></script>
 
 </body>
 
